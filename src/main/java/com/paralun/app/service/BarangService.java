@@ -2,6 +2,7 @@ package com.paralun.app.service;
 
 import com.paralun.app.dao.BarangDao;
 import com.paralun.app.model.Barang;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,11 @@ public class BarangService {
         }
     }
     
+    public List<Barang> fingAll(){
+        try {
+            return dao.findAll();
+        }catch(Throwable t){
+            return null;
+        }
+    }
 }

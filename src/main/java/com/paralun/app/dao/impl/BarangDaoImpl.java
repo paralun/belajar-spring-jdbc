@@ -4,7 +4,9 @@ import com.paralun.app.dao.BarangDao;
 import com.paralun.app.model.Barang;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class BarangDaoImpl implements BarangDao{
     private DataSource dataSource;
     
     private final String INSERT_SQL = "insert into barang (kode,nama,kategori,stok,harga) values (?,?,?,?,?)";
-    
+    private final String SELECT_SQL = "select * from barang";
     @Override
     public void simpan(Barang barang) throws Exception {
         Connection conn = dataSource.getConnection();
@@ -39,6 +41,7 @@ public class BarangDaoImpl implements BarangDao{
             throw new Exception(ex);
         }finally{
             conn.setAutoCommit(true);
+            conn.close();
         }
     }
 
@@ -54,6 +57,24 @@ public class BarangDaoImpl implements BarangDao{
 
     @Override
     public List<Barang> findAll() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = dataSource.getConnection();
+        List<Barang> list = new ArrayList<>();
+        try (PreparedStatement statement = conn.prepareStatement(SELECT_SQL);
+                ResultSet result = statement.executeQuery()){
+            while(result.next()){
+                Barang barang = new Barang(
+                        result.getString(1), 
+                        result.getString(2), 
+                        result.getString(3), 
+                        result.getInt(4), 
+                        result.getBigDecimal(5));
+                list.add(barang);
+            }
+        }catch(SQLException ex){
+            throw new Exception(ex);
+        }finally{
+            conn.close();
+            return list;
+        }
     }
 }

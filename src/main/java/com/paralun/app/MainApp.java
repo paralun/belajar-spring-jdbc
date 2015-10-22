@@ -15,9 +15,19 @@ public class MainApp {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-config-beans.xml");
         BarangService service = (BarangService) context.getBean("barangService");
-        Barang barang = new Barang("B002", "Indomie", "Makanan", 20, new BigDecimal("60000"));
+        Barang barang = new Barang("B003", "Teh Gelas", "Minuman", 50, new BigDecimal("40000"));
+        
         if(service.simpan(barang)){
             System.out.println("Simpan data berhasil!!!");
+            for(Barang b : service.fingAll()){
+                System.out.println("====DATA BARANG====");
+                System.out.println("Kode : " + b.getKode());
+                System.out.println("Nama : " + b.getNama());
+                System.out.println("Kategori : " + b.getKategori());
+                System.out.println("Stok : " + b.getStok());
+                System.out.println("Harga : " + b.getHarga());
+                System.out.println("===================");
+            }
         }else{
             System.out.println("Simpan data gagal!!!");
         }
