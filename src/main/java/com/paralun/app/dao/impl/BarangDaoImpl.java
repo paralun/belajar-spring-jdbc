@@ -54,6 +54,11 @@ public class BarangDaoImpl implements BarangDao{
     public void hapus(String kode) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public Barang getByKode(String kode) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public List<Barang> findAll() throws Exception {

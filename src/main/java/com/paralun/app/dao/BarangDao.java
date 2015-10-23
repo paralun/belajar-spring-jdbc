@@ -11,5 +11,6 @@ public interface BarangDao {
     public void simpan(Barang barang) throws Exception;
     public void update(Barang barang) throws Exception;
     public void hapus(String kode) throws Exception;
+    public Barang getByKode(String kode) throws Exception;
     public List<Barang> findAll() throws Exception;
 }

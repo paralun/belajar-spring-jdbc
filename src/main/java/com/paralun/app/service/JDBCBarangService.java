@@ -1,7 +1,6 @@
 package com.paralun.app.service;
 
 import com.paralun.app.dao.BarangDao;
-import com.paralun.app.dao.impl.JDBCBarangDaoImpl;
 import com.paralun.app.model.Barang;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,34 @@ public class JDBCBarangService {
     public List<Barang> fingAll(){
         try {
             return dao.findAll();
+        }catch(Throwable t){
+            return null;
+        }
+    }
+    
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public boolean update(Barang b){
+        try {
+            dao.update(b);
+            return true;
+        }catch(Throwable t){
+            return false;
+        }
+    }
+    
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public boolean hapus(String kode){
+        try {
+            dao.hapus(kode);
+            return true;
+        }catch(Throwable t){
+            return false;
+        }
+    }
+    
+    public Barang getByKode(String kode){
+        try {
+            return dao.getByKode(kode);
         }catch(Throwable t){
             return null;
         }
